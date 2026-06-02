@@ -52,8 +52,12 @@ async def lawink_statute_precedents(statute_id: str, skip: int = 0, limit: int =
 
 @mcp.tool(
     description="판례 시맨틱(의미) 검색 — 임베딩 기반(공개, 인증 불필요). 사안의 의미로 "
-    "유사 판례 검색 (16만 판례). query=자연어 사안/질의. "
-    "결과의 precedent_id를 lawink_precedent_relations에 넣어 인용 법령·유사 판례로 확장 가능."
+    "유사 판례 검색 (16만 판례). 모든 분야에서 선도 판례를 상위에 올리는 검증된 강점 도구. "
+    "query=자연어 사안/질의. "
+    "결과의 precedent_id를 lawink_precedent_relations에 넣어 인용 법령·유사 판례로 확장. "
+    "★근거 법령 조문이 필요할 때는 lawink_statute_semantic_search로 법령을 직접 찾기보다, "
+    "이 도구로 유사 판례를 먼저 찾은 뒤 lawink_precedent_relations의 cites(인용 법령)에서 "
+    "조문을 도출하는 경로가 더 정확하다(권장 워크플로우)."
 )
 async def lawink_precedent_semantic_search(query: str, limit: int = 10) -> dict:
     return await relay.post("/precedent-search/similar", {"query": query, "top_k": limit})
@@ -62,7 +66,12 @@ async def lawink_precedent_semantic_search(query: str, limit: int = 10) -> dict:
 @mcp.tool(
     description="법령 조문 시맨틱(의미) 검색 — 임베딩 기반(공개, 인증 불필요). 사안 설명으로 "
     "관련 법령 조문 검색 (13만 조문). query=자연어 사안/질의. "
-    "결과의 statute_id를 lawink_statute_precedents에 넣어 '이 법령을 적용한 판례'로 확장 가능."
+    "결과의 statute_id를 lawink_statute_precedents에 넣어 '이 법령을 적용한 판례'로 확장 가능. "
+    "⚠️주의: 현재 법령 직접 시맨틱 검색은 어휘 매칭 편향이 있어 1위 결과가 사안과 무관한 "
+    "법령(예: 세법·절차규칙)일 수 있고, similarity_score(0.84~0.89 좁은 구간에 뭉침)는 "
+    "신뢰도 지표로 사용하지 말 것. 정확한 근거 조문이 필요하면 lawink_precedent_semantic_search로 "
+    "유사 판례를 찾은 뒤 lawink_precedent_relations의 cites(인용 법령)에서 조문을 도출하는 "
+    "경로를 우선 사용하라."
 )
 async def lawink_statute_semantic_search(query: str, limit: int = 10) -> dict:
     return await relay.post("/statute-search/similar", {"query": query, "top_k": limit})
