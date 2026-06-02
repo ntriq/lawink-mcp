@@ -51,13 +51,12 @@ async def lawink_statute_precedents(statute_id: str, skip: int = 0, limit: int =
 
 
 @mcp.tool(
-    description="판례 시맨틱(의미) 검색 — 임베딩 기반. 키워드가 아니라 사안의 의미로 "
-    "유사 판례 검색 (16만 판례). query=자연어 사안/질의. (Pro: 인증 필요할 수 있음)"
+    description="판례 시맨틱(의미) 검색 — 임베딩 기반(공개, 인증 불필요). 사안의 의미로 "
+    "유사 판례 검색 (16만 판례). query=자연어 사안/질의. "
+    "결과의 precedent_id를 lawink_precedent_relations에 넣어 인용 법령·유사 판례로 확장 가능."
 )
 async def lawink_precedent_semantic_search(query: str, limit: int = 10) -> dict:
-    return await relay.post(
-        "/connectors/kr-court-precedents/semantic-search", {"query": query, "limit": limit}
-    )
+    return await relay.post("/precedent-search/similar", {"query": query, "top_k": limit})
 
 
 @mcp.tool(
