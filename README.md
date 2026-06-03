@@ -22,7 +22,7 @@
     "lawink": {
       "command": "uvx",
       "args": ["lawink-mcp"],
-      "env": { "LAWINK_API_BASE": "https://api.lawink.co.kr" }
+      "env": { "LAWINK_API_BASE": "https://api.ntriq.co.kr" }
     }
   }
 }
