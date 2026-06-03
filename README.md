@@ -80,7 +80,7 @@
 
 ## 만든 사람
 
-**김대환** — ntriq(엔트릭) 창업자
+**김대환** ([@daehwan-k](https://github.com/daehwan-k)) — ntriq(엔트릭) 창업자
 한국 법률 데이터를 AI에 연결합니다. 문의·제휴: support@ntriq.co.kr
 
 ## 라이선스
