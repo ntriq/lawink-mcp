@@ -64,6 +64,17 @@ async def lawink_precedent_semantic_search(query: str, limit: int = 10) -> dict:
 
 
 @mcp.tool(
+    description="★사안 → 근거 법령 도출 (변호사 추천 경로). 자연어 사안을 넣으면 "
+    "① 유사 판례를 찾고 ② 그 판례들이 실제 인용한 법령(cites)을 빈도순으로 반환한다. "
+    "법령 직접 시맨틱 검색(lawink_statute_semantic_search)의 어휘 편향을 우회하므로 "
+    "근거 조문 도출에는 이 도구가 더 정확하다. 각 법령에 출처 판례가 함께 붙는다. "
+    "query=자연어 사안/질의."
+)
+async def lawink_statute_by_precedent(query: str, limit: int = 10) -> dict:
+    return await relay.post("/precedent-search/statute-by-precedent", {"query": query, "top_k": limit})
+
+
+@mcp.tool(
     description="법령 조문 시맨틱(의미) 검색 — 임베딩 기반(공개, 인증 불필요). 사안 설명으로 "
     "관련 법령 조문 검색 (13만 조문). query=자연어 사안/질의. "
     "결과의 statute_id를 lawink_statute_precedents에 넣어 '이 법령을 적용한 판례'로 확장 가능. "
