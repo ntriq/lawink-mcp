@@ -27,12 +27,42 @@
   }
 }
 ```
-> PyPI 배포 전이면 소스 설치: repo clone 후
-> `command`: `/path/to/lawink-mcp/.venv/bin/python`, `args`: `["-m", "lawink_mcp.server"]`
-
 **Cursor / 기타 MCP 클라이언트**: 동일하게 `lawink-mcp`를 stdio MCP 서버로 등록.
 
 재시작하면 `lawink_*` 도구 6종이 뜹니다. 인증·API 키 없이 바로 사용.
+
+> 사전 준비물: [uv](https://docs.astral.sh/uv/)(파이썬 실행 도구) 한 번 설치하면 `uvx`가 알아서 패키지를 받아 실행합니다. (아래 "AI에게 맡기기" 참고)
+
+## 🧑‍⚖️ 코딩 모르세요? AI에게 맡기세요 (비개발자용)
+
+변호사님 대부분 개발자가 아니시죠. **쓰시는 AI(Claude·ChatGPT)에게 아래 문장을 그대로 복사해 붙여넣으면**, AI가 설치를 단계별로 안내해 줍니다:
+
+```
+나는 변호사이고 코딩을 몰라. 내 컴퓨터의 Claude Desktop에 'lawink'라는 MCP 서버를
+추가하고 싶어. 아래 설정을 claude_desktop_config.json 파일에 추가하는 방법을
+단계별로 알려주고, 필요하면 uv(파이썬 실행 도구) 설치법도 알려줘.
+내 운영체제는 (macOS 또는 Windows) 야.
+
+{
+  "mcpServers": {
+    "lawink": {
+      "command": "uvx",
+      "args": ["lawink-mcp"],
+      "env": { "LAWINK_API_BASE": "https://api.ntriq.co.kr" }
+    }
+  }
+}
+```
+
+설정 파일 위치 (AI가 못 찾으면 알려주세요):
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+설치 후 Claude Desktop을 **완전히 종료했다 다시 켜면** 도구가 나타납니다. "lawink 도구 목록 보여줘"라고 입력해 보세요.
+
+> 🤝 혼자 어려우면 **support@ntriq.co.kr** 로 연락주세요 — 화면공유로 **1:1 설치를 직접 도와드립니다.** (베타 테스터께는 처음부터 끝까지 함께 설정해 드립니다.)
+>
+> 곧 **설치조차 필요 없는 원클릭 버전**도 준비 중입니다.
 
 ## 도구 (6종, 무료·인증 불필요)
 
