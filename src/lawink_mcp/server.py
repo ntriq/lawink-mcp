@@ -64,25 +64,24 @@ async def lawink_precedent_semantic_search(query: str, limit: int = 10) -> dict:
 
 
 @mcp.tool(
-    description="★사안 → 근거 법령 도출 (변호사 추천 경로). 자연어 사안을 넣으면 "
-    "① 유사 판례를 찾고 ② 그 판례들이 실제 인용한 법령(cites)을 빈도순으로 반환한다. "
-    "법령 직접 시맨틱 검색(lawink_statute_semantic_search)의 어휘 편향을 우회하므로 "
-    "근거 조문 도출에는 이 도구가 더 정확하다. 각 법령에 출처 판례가 함께 붙는다. "
-    "query=자연어 사안/질의."
+    description="★★사안 → 근거 법령 도출 (변호사용 기본·1차 진입점). 근거 조문이 필요하면 이 도구를 "
+    "먼저 쓴다. 자연어 사안을 넣으면 ① 유사 판례를 찾고 ② 그 판례들이 실제 인용한 법령(cites)을 "
+    "빈도순으로 반환한다. 법령 직접 시맨틱 검색(lawink_statute_semantic_search)의 어휘 편향을 우회하므로 "
+    "근거 조문 도출에는 이 도구가 더 정확하다(검증: 임대차 → 민법 제618·615·654조 정확 도출). "
+    "각 법령에 출처 판례가 함께 붙는다. query=자연어 사안/질의."
 )
 async def lawink_statute_by_precedent(query: str, limit: int = 10) -> dict:
     return await relay.post("/precedent-search/statute-by-precedent", {"query": query, "top_k": limit})
 
 
 @mcp.tool(
-    description="법령 조문 시맨틱(의미) 검색 — 임베딩 기반(공개, 인증 불필요). 사안 설명으로 "
-    "관련 법령 조문 검색 (13만 조문). query=자연어 사안/질의. "
-    "결과의 statute_id를 lawink_statute_precedents에 넣어 '이 법령을 적용한 판례'로 확장 가능. "
-    "⚠️주의: 현재 법령 직접 시맨틱 검색은 어휘 매칭 편향이 있어 1위 결과가 사안과 무관한 "
-    "법령(예: 세법·절차규칙)일 수 있고, similarity_score(0.84~0.89 좁은 구간에 뭉침)는 "
-    "신뢰도 지표로 사용하지 말 것. 정확한 근거 조문이 필요하면 lawink_precedent_semantic_search로 "
-    "유사 판례를 찾은 뒤 lawink_precedent_relations의 cites(인용 법령)에서 조문을 도출하는 "
-    "경로를 우선 사용하라."
+    description="⚠️[보조·실험적 — 변호사 업무용 1차 도구로 쓰지 말 것] 법령 조문 직접 시맨틱 검색 "
+    "(임베딩, 13만 조문). 어휘 매칭 편향이 있어 1위 결과가 사안과 무관한 법령(예: 세법·절차규칙)일 "
+    "수 있고, similarity_score(0.84~0.89 좁은 구간에 뭉침)는 신뢰도 지표가 아니다. "
+    "★사안 → 근거 조문이 필요하면 반드시 lawink_statute_by_precedent를 먼저 쓸 것 "
+    "(유사 판례가 실제 인용한 법령을 빈도순·출처판례와 함께 한 번에 반환 — 예: 임대차 → 민법 제618·615·654조). "
+    "이 도구는 위 경로로 안 잡히는 조문을 보조 탐색할 때만 사용. query=자연어 사안/질의. "
+    "결과의 statute_id는 lawink_statute_precedents에 넣어 '이 법령을 적용한 판례'로 확장 가능."
 )
 async def lawink_statute_semantic_search(query: str, limit: int = 10) -> dict:
     return await relay.post("/statute-search/similar", {"query": query, "top_k": limit})

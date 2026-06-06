@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "lawink-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "Korean Legal Ontology & Case-Law MCP for Claude Desktop (LaWink)"
 readme = "README.md"
 requires-python = ">=3.10"

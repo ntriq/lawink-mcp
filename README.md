@@ -74,7 +74,7 @@
 | `lawink_statute_precedents` | **이 법령 조문을 적용한 판례 목록** (법령→판례 추적) |
 | `lawink_precedent_semantic_search` | 자연어 사안 → 유사 판례 (16만, 임베딩) |
 | ⭐ `lawink_statute_by_precedent` | **사안 → 근거 법령** (유사 판례들이 인용한 법령을 빈도순 + 출처 판례). 근거 조문 도출 추천 경로 |
-| `lawink_statute_semantic_search` | 자연어 사안 → 관련 법령 조문 (13만, 임베딩) |
+| `lawink_statute_semantic_search` | ⚠️*(보조)* 자연어 사안 → 법령 조문 직접검색 (13만, 임베딩). 어휘 편향으로 1위가 사안과 무관할 수 있어 근거조문은 위 `statute_by_precedent` 우선 |
 
 ## 변호사 워크플로우 예시
 
